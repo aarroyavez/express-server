@@ -1,7 +1,7 @@
 const readline = require("readline")
 const express = require("express")
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // interfaz para interactuar con el usuario en línea de comandos
 const readlineInterface = readline.createInterface({
@@ -35,14 +35,14 @@ app.post("/tasks", (req, res) => {
     res.json({mensaje: "Tarea agregada correctamente"});
 });
 
-app.delete("tasks/:indicator", (req, res) => {
+app.delete("/tasks/:indicator", (req, res) => {
     const indicator = req.params.indicator;
     const taskIndex = tasks.findIndex((task) => task.indicator === indicator);
     if (taskIndex != -1) {
         tasks.splice(taskIndex, 1);
         return res.json({mensaje: "Tarea eliminada correctamente"});
     }
-    res.status(404).json({ error:'¡NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO❗' });
+    res.status(404).json({ error:'NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO' });
 
 });
 
@@ -53,7 +53,7 @@ app.put("/tasks/:indicator", (req, res) => {
         task.completed = true;
         return res.json({mensaje: "Tarea marcada como completada"});
     }
-    res.status(404).json({error: "¡NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO❗"})
+    res.status(404).json({error: "NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO"});
 })
 
 app.listen(port, () => {
