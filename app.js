@@ -4,10 +4,10 @@ const app = express();
 const port = 8080;
 
 // interfaz para interactuar con el usuario en línea de comandos
-const readlineInterface = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+// const readlineInterface = readline.createInterface({
+//     input: process.stdin,
+//     output: process.stdout
+// });
 // arreglo que almacenará tareas
 const tasks = []; 
 // solicitudes entrantes en formato json
