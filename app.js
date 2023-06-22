@@ -1,7 +1,7 @@
 const readline = require("readline")
 const express = require("express")
 const app = express();
-const port = 3001;
+const port = 8080;
 
 // interfaz para interactuar con el usuario en línea de comandos
 const readlineInterface = readline.createInterface({
@@ -17,11 +17,21 @@ app.get("/tasks", (req, res) => {
     res.json(tasks);
 })
 
+// app.get("/tasks/:indicator/:description/:completed", (req, res) => {
+//     const indicator = req.params.indicator;
+//     const description = req.params.description;
+//     const completed = req.params.completed;
+
+//     res.json({indicator, description, completed})
+// })
+
 app.post("/tasks", (req, res) => {
+    // const body = req.body
+    // res.send(body)
     const indicator = req.body.indicator;
     const repeatedTask = tasks.find((task) => task.indicator === indicator);
     if (repeatedTask) {
-        return res.status(400).json({error: "YA EXISTE UNA TAREA CON EL MISMO INDICADOR❌👉 SELECCIONA OTRO NÚMERO"});
+        return res.status(400).json({error: "Indicador inválido"});
     }
 
     const description = req.body.description;
@@ -32,7 +42,7 @@ app.post("/tasks", (req, res) => {
     };
     tasks.push(task);
 
-    res.json({mensaje: "Tarea agregada correctamente"});
+    res.json({mensaje: "Tarea agregada"});
 });
 
 app.delete("/tasks/:indicator", (req, res) => {
@@ -42,7 +52,7 @@ app.delete("/tasks/:indicator", (req, res) => {
         tasks.splice(taskIndex, 1);
         return res.json({mensaje: "Tarea eliminada correctamente"});
     }
-    res.status(404).json({ error:'NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO' });
+    res.status(404).json({ error: "No es posible eliminar. Ninguna tarea coincide con el indicador suministrado. Por favor, intente de nuevo."});
 
 });
 
@@ -51,9 +61,9 @@ app.put("/tasks/:indicator", (req, res) => {
     const task = tasks.find((task) => task.indicator === indicator);
     if (task) {
         task.completed = true;
-        return res.json({mensaje: "Tarea marcada como completada"});
+        return res.json({mensaje: "Tarea completada"});
     }
-    res.status(404).json({error: "NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO"});
+    res.status(404).json({error: "No es posible completar. Ninguna tarea coincide con el indicador suministrado. Por favor, intente de nuevo."})
 })
 
 app.listen(port, () => {
@@ -66,44 +76,28 @@ const questionAsync = (question) => {
     });
 };
 
-// Entradas del usuario desde consola
 const promptAddTask = () => {
     return new Promise(async(resolve) => {
         const indicator = await questionAsync("Por favor, digite un indicador único para la tarea: "); // await antes de qestionAsyn para esperar la respuesta del usuario
         if (isNaN(indicator)) {
-            (console.log("EL INDICADOR DEBE SER UN NÚMERO❗👉 VUELVE A INTENTAR"))
+            (console.log("El indicador debe ser un número. Por favor, intenta de nuevo"))
             showMenu();
             return;
         }
         const repeatedTask = tasks.find((task) => task.indicator === indicator);
         if (repeatedTask) {
-            (console.log("YA EXISTE UNA TAREA CON EL MISMO INDICADOR❌👉 SELECCIONA OTRO NÚMERO"));
+            (console.log("Ya existe una tarea con el mismo indicador. Por favor, intenta con otro número."));
             showMenu();
             return;
         }
-        const description = await questionAsync("Digite una descripción para la tarea que desee agregar: ");
+        const description = await questionAsync("Por favor, digite una descripción para la tarea que desee agregar: ");
         const task = {
             indicator,
             description,
             completed: false
         };
         tasks.push(task);
-        console.log("TAREA AGREGADA CORRECTAMENTE✅");
-        resolve();
-        showMenu();
-    });
-};
-
-const promptDeleteTask = () => {
-    return new Promise(async(resolve) => {
-        const indicator = await questionAsync("Digite un indicador para la tarea que desee eliminar: ");
-        const taskIndex = tasks.findIndex((task) => task.indicator === indicator);
-        if (taskIndex !== -1) {
-            tasks.splice(taskIndex, 1);
-            console.log("TAREA ELIMINADA CORRECTAMENTE✅");
-        } else {
-            console.log("¡NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO❗");
-        }
+        console.log("Tarea agregada ✅");
         resolve();
         showMenu();
     });
@@ -111,13 +105,28 @@ const promptDeleteTask = () => {
 
 const promptCompleteTask = () => {
     return new Promise(async(resolve) => {
-        const indicator = await questionAsync("Digite el indicador de la tarea a marcar como completada: ")
+        const indicator = await questionAsync("Por favor, digite el indicador de la tarea a marcar como completada: ")
         const task = tasks.find((task) => task.indicator === indicator);
         if (task) {
             task.completed = true;
-            console.log("TAREA MARCADA COMO COMPLETADA CORRECTAMENTE✅");
+            console.log("Tarea completada ✅");
         } else {
-            console.log("¡NINGUNA TAREA COINCIDE CON EL INDICADOR PROPORCIONADO❗");
+            console.log("No es posible completar. Ninguna tarea coincide con el indicador suministrado. Por favor, intente de nuevo.");
+        }
+        resolve();
+        showMenu();
+    });
+};
+
+const promptDeleteTask = () => {
+    return new Promise(async(resolve) => {
+        const indicator = await questionAsync("Por favor, digite un indicador para la tarea que desee eliminar: ");
+        const taskIndex = tasks.findIndex((task) => task.indicator === indicator);
+        if (taskIndex !== -1) {
+            tasks.splice(taskIndex, 1);
+            console.log("Tarea eliminada ✅");
+        } else {
+            console.log("No es posible eliminar. Ninguna tarea coincide con el indicador suministrado. Por favor, intente de nuevo.");
         }
         resolve();
         showMenu();
