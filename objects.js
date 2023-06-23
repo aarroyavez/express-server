@@ -1,9 +1,11 @@
 // constructor de objetos
 
-const Task = function(id, description, completed) {
-    this.id = id;
-    this.description = description;
-    this.completed = completed;
+class Task {
+    constructor(id, description, completed) {
+        this.id = id;
+        this.description = description;
+        this.completed = completed;
+    }
 }
 const tasks = [];
 
