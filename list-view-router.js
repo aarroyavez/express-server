@@ -13,32 +13,54 @@ router.get("/", (req, res) => {
     res.json(listTask());
 })
 
-//Ruta para mostrar lista de tareas completas con params
-router.get("/completed/:completed", (req, res) => {
-    const completed = req.params.completed;
+
+// Rutas en para listar el estado de las tareas en un solo router
+// /status?completed=true y /status?completed=false
+router.get("/status", (req, res) => {
+    const completed = req.query.completed;
+
     if (completed === "true") {
         const completedTasks = tasks.filter((task) => task.completed);
         if (completedTasks.length === 0) {
-            res.status(404).json({error: "Al momento, ninguna tarea está completa"});
+            res.status(400).json({ error: "Al momento, ninguna tarea está completa" });
         } else {
             res.json(completedTasks);
         }
-    } else {
-        res.status(400).json({ error: "La ruta no es válida" });
-    }
-});
-
-//Ruta para mostrar lista de tareas incompletas con Params
-router.get("/incompleted/:incompleted", (req, res) => {
-    const incompleted = req.params.incompleted;
-    if(incompleted === "true") {
+    } else if (completed === "false") {
         const incompleteTasks = tasks.filter((task) => !task.completed);
         res.json(incompleteTasks);
-    } else {
-        res.status(400).json({error: "Ruta inválida"})
-    }
+    } 
+});
 
-})
+
+// //Ruta para mostrar lista de tareas completas con params
+// funciona con la ruta /tasks/status?completed=true
+// router.get("/status", (req, res) => {
+//     const completed = req.query.completed === "true";
+//     if (completed) {
+//         const completedTasks = tasks.filter((task) => task.completed);
+//         if (completedTasks.length === 0) {
+//             res.status(404).json({error: "Al momento, ninguna tarea está completa"});
+//         } else {
+//             res.json(completedTasks);
+//         }
+//     } else {
+//         res.status(400).json({ error: "La ruta no es válida" });
+//     }
+// });
+
+// //Ruta para mostrar lista de tareas incompletas con Params
+//no funciona 
+// router.get("/status", (req, res) => {
+//     const incompleted = req.query.incompleted === "true";
+//     if(incompleted) {
+//         const incompleteTasks = tasks.filter((task) => !task.completed);
+//         res.json(incompleteTasks);
+//     } else {
+//         res.status(400).json({error: "Ruta inválida"})
+//     }
+
+// })
 
 // Mostrar una tarea en específico usando params 
 // router.get("/:indicator/:description/:completed", (req, res) => {
