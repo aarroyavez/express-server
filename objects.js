@@ -1,5 +1,4 @@
 // constructor de objetos
-
 class Task {
     constructor(id, description, completed) {
         this.id = id;
