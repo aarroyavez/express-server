@@ -11,8 +11,13 @@ const middError = (error, req, res, next) => {
 
 // Agregar una tarea nueva (el indicador y la descripción se envían en el cuerpo de la solicitud)
 router.post("/", (req, res, next) => {
+    // Error de cuerpo vacío
+   if (!req.body || Object.keys(req.body).length === 0) {
+    return next(Errors.emptyRequestBody)
+   }
+   // Extraer id y description de req.body
    const {id, description} = req.body;
-
+   // Error para id que no sea número o id vacío o descripción vacía 
     if (!id || isNaN(id) || !description) {
         return next(Errors.invalidTaskData)
     }
@@ -21,7 +26,7 @@ router.post("/", (req, res, next) => {
     }
     const task = new Task(id, description, false) 
     addTask(task)
-    res.json({ mensaje: Messages.taskAdded });
+    res.json({ message: Messages.taskAdded });
 });
 
 // Eliminar tarea por id 
@@ -33,8 +38,15 @@ router.delete("/:id", (req, res) => {
 
 // Completar tarea por id
 router.put("/:id", (req, res, next) => {
+    // Error de cuerpo vacío
+    if(!req.body || Object.keys(req.body).length === 0) {
+        // Error si el cuerpo está vacío
+        return next(Errors.emptyRequestBody)
+    }
+
     const id = req.params.id;
     const task = tasks.find((task) => task.id === id);
+
     if (task) {
         completeTask(task.id); 
         return res.json({ message: Messages.taskCompleted });
@@ -43,8 +55,6 @@ router.put("/:id", (req, res, next) => {
 });
 
 // Agrego middleware para manejo de errores
-
 router.use(middError);
-
 
 module.exports = router;
