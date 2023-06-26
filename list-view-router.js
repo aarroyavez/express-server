@@ -41,7 +41,7 @@ router.get("/status", validateParams, (req, res, next) => {
     }
 });
 
-// Aplico middleware de manejo de errores local
+// Aplico middleware de manejo de errores local 
 router.use(errorHandler);
 
 module.exports = router;
