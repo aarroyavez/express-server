@@ -32,6 +32,7 @@ app.use("/tasks", listEditRouter);
 
 // Aplicar middleware de manejo global de errores
 app.use(errorHandler);
+
 // Servidor escuchando
 app.listen(port, () => {
     console.log("Servidor corriendo en puerto", `${port}`)

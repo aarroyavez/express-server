@@ -9,7 +9,7 @@ const middError = (error, req, res, next) => {
     res.status(400).json({error: error});
 }
 
-// Agregar una tarea nueva (el indicador y la descripción se envían en el cuerpo de la solicitud)
+// POST -> Agregar una tarea nueva (el indicador y la descripción se envían en el cuerpo de la solicitud)
 router.post("/", (req, res, next) => {
     // Error de cuerpo vacío
    if (!req.body || Object.keys(req.body).length === 0) {
@@ -29,14 +29,14 @@ router.post("/", (req, res, next) => {
     res.json({ message: Messages.taskAdded });
 });
 
-// Eliminar tarea por id 
+// DELETE -> Eliminar tarea por id 
 router.delete("/:id", (req, res) => {
     const id = req.params.id;
     deleteTask(id);  
     return res.json({ message: Messages.taskDeleted });
 });
 
-// Completar tarea por id
+// PUT -> Completar tarea por id
 router.put("/:id", (req, res, next) => {
     // Error de cuerpo vacío
     if(!req.body || Object.keys(req.body).length === 0) {
