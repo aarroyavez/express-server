@@ -8,7 +8,10 @@ const Errors = {
   // list-view.js
   invalidParameter: "Parámetro no válido",
   incompleteTask: "Al momento, ninguna tarea completa",
-  invalidRoute: "Ruta no válida"
+  invalidRoute: "Ruta no válida",
+
+  //app.js
+  invalidMethod: "Método HTTP no válido"
   };
   
   module.exports = Errors;

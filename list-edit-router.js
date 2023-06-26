@@ -5,8 +5,8 @@ const Errors = require("./Errors");
 const Messages = require("./Messages");
 
 // middleware de manejo de errores
-const middError = (error, req, res, next) => {
-    res.status(400).json({error: error});
+const middError = (err, req, res, next) => {
+    res.status(400).json({error: err});
 }
 
 // POST -> Agregar una tarea nueva (el indicador y la descripción se envían en el cuerpo de la solicitud)
@@ -21,6 +21,7 @@ router.post("/", (req, res, next) => {
     if (!id || isNaN(id) || !description) {
         return next(Errors.invalidTaskData)
     }
+    // Error para id repetido
     if (repeateTask(id)) {
         return next(Errors.indicatorRepeated)
     }

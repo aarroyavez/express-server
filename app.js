@@ -4,12 +4,13 @@ const port = 8080;
 // Importar módulos de enrutamiento
 const listViewRouter = require("./list-view-router");
 const listEditRouter = require("./list-edit-router");
+const Errors = require("./Errors");
 
 // Middleware para validar el método http
 const validateMethod = (req, res, next) => {
     const validsMethods = ["GET", "POST", "PUT", "DELETE"];
     if (!validsMethods.includes(req.method)) {
-        return res.status(405).json({ error: "Método HTTP no válido"});
+        return res.status(405).json({ error: Errors.invalidMethod});
     }
     next();
 };
