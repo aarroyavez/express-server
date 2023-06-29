@@ -1,6 +1,12 @@
 const express = require("express")
 const app = express();
 const Errors = require("./Errors");
+
+//Importar libreria jwt
+const jwt = require("jsonwebtoken");
+
+require("dotenv").config();
+
 // Importar módulos de enrutamiento
 const listViewRouter = require("./list-view-router");
 const listEditRouter = require("./list-edit-router");

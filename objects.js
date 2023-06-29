@@ -34,4 +34,18 @@ const completeTask = function(id) {
     }
 }
 
-module.exports = {Task, tasks, addTask, listTask, deleteTask, repeateTask, completeTask}
+const users = [
+    {
+        id: 1,
+        user: "Maria Alejandra Amaya",
+        password: "12345"
+    },
+    {
+        ide: 2,
+        user: "Alexander Arroyave Zapata",
+        password: "678910"
+    }
+]
+
+
+module.exports = {Task, tasks, addTask, listTask, deleteTask, repeateTask, completeTask, users}
