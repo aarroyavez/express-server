@@ -88,9 +88,10 @@ const authToken = (req, res, next) => {
 
 // Ruta protegida
 app.get("/protected", authToken, (req, res) => {
-
+    // Obtener el id del usuario desde el token verificado
     const userId = req.userId;
 
+    // Realizar alguna operación protegida 
     res.json({message: "Ruta protegida alcanzada", userId});
 });
 
