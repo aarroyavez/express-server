@@ -37,12 +37,12 @@ const completeTask = function(id) {
 const users = [
     {
         id: 1,
-        user: "Maria Alejandra Amaya",
+        username: "Maria Alejandra Amaya",
         password: "12345"
     },
     {
         ide: 2,
-        user: "Alexander Arroyave Zapata",
+        username: "Alexander Arroyave Zapata",
         password: "678910"
     }
 ]
