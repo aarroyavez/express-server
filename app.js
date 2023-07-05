@@ -96,6 +96,6 @@ app.get("/protected", authToken, (req, res) => {
 });
 
 // Servidor escuchando en el puerto 8080
-app.listen(8080, () => {
-    console.log("Servidor corriendo en puerto 8080")
+app.listen(8000, () => {
+    console.log("Servidor corriendo en puerto 8000")
 });
