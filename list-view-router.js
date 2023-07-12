@@ -57,6 +57,3 @@ router.get("/status", validateParams, (req, res, next) => {
 router.use(errorHandler);
 
 module.exports = router;
-
-
-
