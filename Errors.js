@@ -4,6 +4,7 @@ const Errors = {
   indicatorRepeated: "Indicador repetido. Por favor, use cualquier otro número para el id.",
   emptyRequestBody: "Debe ingresar algún dato",
   taskNotFound: "No se encontró ninguna tarea con el identificador proporcionado",
+  taskAlreadyCompleted: "Ya se ha completado esta tarea",
 
   // list-view.js
   invalidParameter: "Parámetro no válido",

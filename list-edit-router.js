@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {tasks, Task, addTask, repeateTask, deleteTask, completeTask} = require("./objects");
+const {tasks, Task, addTask, createTask, repeateTask, deleteTask, completeTask} = require("./objects");
 const Errors = require("./Errors");
 const Messages = require("./Messages");
 
@@ -25,7 +25,7 @@ router.post("/", (req, res, next) => {
     if (repeateTask(id)) {
         return next(Errors.indicatorRepeated)
     }
-    const task = new Task(id, description, false) 
+    const task = createTask(id, description, false) 
     addTask(task)
     res.json({ message: Messages.taskAdded });
 });
@@ -49,12 +49,17 @@ router.put("/:id", (req, res, next) => {
     const task = tasks.find((task) => task.id === id);
 
     if (task) {
-        completeTask(task.id); 
-        return res.json({ message: Messages.taskCompleted });
+        if (task.completed) {
+            // La tarea ya está completada, mostrar mensaje de error
+            return next(Errors.taskAlreadyCompleted);
+        } else {
+            completeTask(task.id);
+            return res.json({ message: Messages.taskCompleted });
+        }
+    } else {
+        next(Errors.taskNotFound);
     }
-    next(Errors.taskNotFound);
 });
-
 // Agrego middleware para manejo de errores
 router.use(middError);
 
