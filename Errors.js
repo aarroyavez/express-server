@@ -10,6 +10,7 @@ const Errors = {
   invalidParameter: "Parámetro no válido",
   incompleteTask: "Al momento, ninguna tarea completa",
   invalidRoute: "Ruta no válida",
+  taskNotFound: "Tarea no encontrada",
 
   //app.js
   invalidMethod: "Método HTTP no válido"

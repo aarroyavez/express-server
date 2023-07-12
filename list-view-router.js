@@ -22,6 +22,18 @@ router.get("/", (req, res) => {
     res.json(listTask());
 })
 
+// Muestra una tarea individual por id
+router.get("/:id", (req, res, next) => {
+    const taskId = req.params.id;
+    const task = tasks.find((task) => task.id === taskId);
+
+    if(task) {
+        res.json(task);
+    } else {
+        next(Errors.taskNotFound)
+    }
+})
+
 // Rutas en para listar el estado de las tareas en un solo router
 // /status?completed=true y /status?completed=false
 router.get("/status", validateParams, (req, res, next) => {
